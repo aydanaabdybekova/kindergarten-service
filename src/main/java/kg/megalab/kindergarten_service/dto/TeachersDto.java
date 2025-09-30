@@ -18,7 +18,7 @@ public class TeachersDto {
 
     private String patronymic;
 
-    @NotBlank(message = "Степень/роль обязательна")
+    @NotNull(message = "Степень/роль обязательна")
     private TeacherDegree teacherDegree;
 
     @NotNull(message = "Статус обязателен")
