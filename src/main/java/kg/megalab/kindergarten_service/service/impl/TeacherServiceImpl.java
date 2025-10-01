@@ -41,7 +41,7 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public Teachers update(Long id, TeachersDto teachersDto) {
         Teachers teachers = teacherRepo.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Категория не найдена"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Преподаватель не найден"));
 
         teacherMapper.updateEntityFromDto(teachersDto, teachers);
         return teacherRepo.save(teachers);
@@ -50,7 +50,7 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public Teachers delete(Long id) {
         Teachers teachers = teacherRepo.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Категория не найдена"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Преподаватель не найден"));
 
         teacherRepo.delete(teachers);
         return teachers;
@@ -59,7 +59,7 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public Teachers getById(Long id) {
         return teacherRepo.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Категория не найдена"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Преподаватель не найден"));
 
     }
 
