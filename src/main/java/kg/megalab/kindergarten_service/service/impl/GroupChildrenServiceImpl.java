@@ -51,7 +51,7 @@ public class GroupChildrenServiceImpl implements GroupChildrenService {
         GroupChildrens groupChild = new GroupChildrens();
         groupChild.setChildren(child);
         groupChild.setGroup(group);
-        groupChild.setStartDate(LocalDate.now());
+        groupChild.setStartDate(LocalDate.now().minusMonths(1));
         groupChild.setPrice(dto.getPrice() != null ? dto.getPrice() : group.getPrice());
 
         return groupChildrenRepo.save(groupChild);
