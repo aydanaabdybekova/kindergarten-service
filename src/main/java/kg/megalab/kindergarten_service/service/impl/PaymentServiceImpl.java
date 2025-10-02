@@ -58,19 +58,21 @@ public class PaymentServiceImpl implements PaymentService {
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND, "Ребенок не найден или не был активен в прошлом месяце"));
 
-        Double price = groupChild.getPrice() != null ? groupChild.getPrice() : groupChild.getGroup().getPrice();
+        double price = groupChild.getPrice() != null
+                ? groupChild.getPrice()
+                : groupChild.getGroup().getPrice();
 
-        Double totalPaid = paymentRepo.findByGroupChildrensAndPaymentDateBetween(
+        double totalPaid = paymentRepo.findByGroupChildrensAndPaymentDateBetween(
                         groupChild, startOfMonth, endOfMonth)
                 .stream()
-                .map(Payments::getAmount)
-                .reduce(0.0, Double::sum);
+                .mapToDouble(Payments::getAmount)
+                .sum();
 
-        double amountDue = Math.max(price - totalPaid, 0);
+        double result = Math.max(price - totalPaid, 0); // не может быть отрицательным
 
         PreviousMonthDebtDto dto = new PreviousMonthDebtDto();
         dto.setChildId(childId);
-        dto.setAmountDue((int) Math.round(amountDue));
+        dto.setAmountDue((int) Math.round(result));
 
         return dto;
     }
